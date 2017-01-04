@@ -22,10 +22,10 @@ public class GooglePlusClient {
     private Activity activity;
     private GoogleApiClient mGoogleApiClient;
     private Fragment fragment;
-    private GooglePlusResultCallback googlePlusResultCallback;
+    private GooglePlusProfileLoadedListener googlePlusProfileLoadedListener;
     private String clientId;
 
-    public interface GooglePlusResultCallback {
+    public interface GooglePlusProfileLoadedListener {
         void onProfileLoaded(GooglePlusProfile googlePlusProfile);
     }
 
@@ -39,8 +39,8 @@ public class GooglePlusClient {
         this.clientId = clientId;
     }
 
-    public void getProfile(GooglePlusResultCallback googlePlusResultCallback) {
-        this.googlePlusResultCallback = googlePlusResultCallback;
+    public void getProfile(GooglePlusProfileLoadedListener googlePlusProfileLoadedListener) {
+        this.googlePlusProfileLoadedListener = googlePlusProfileLoadedListener;
         if (mGoogleApiClient == null || mGoogleApiClient.isConnected()) {
             GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestIdToken(clientId)
@@ -75,13 +75,13 @@ public class GooglePlusClient {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             if (result.isSuccess()) {
                 GoogleSignInAccount account = result.getSignInAccount();
-                if (googlePlusResultCallback != null) {
+                if (googlePlusProfileLoadedListener != null) {
                     String avatar = null;
                     if (account != null && account.getPhotoUrl() != null) {
                         avatar = account.getPhotoUrl().toString();
                     }
                     if (account != null) {
-                        googlePlusResultCallback.onProfileLoaded(new GooglePlusProfile(
+                        googlePlusProfileLoadedListener.onProfileLoaded(new GooglePlusProfile(
                                 account.getDisplayName(),
                                 account.getIdToken(),
                                 avatar,

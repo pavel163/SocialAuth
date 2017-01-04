@@ -1,6 +1,6 @@
 include ':app'
-include ':vk'
-//include ':instagram'
+//include ':vk'
+include ':instagram'
 //include ':twitter'
 //include ':facebook'
 include ':google'

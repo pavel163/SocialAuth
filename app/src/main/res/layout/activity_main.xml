@@ -16,4 +16,14 @@
         android:onClick="onClick"
         android:text="Google Plus"
         android:textColor="@android:color/white" />
+
+    <Button
+        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:id="@+id/instagram"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/darker_gray"
+        android:onClick="onClick"
+        android:text="instagram"
+        android:textColor="@android:color/white" />
 </LinearLayout>
