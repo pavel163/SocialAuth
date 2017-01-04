@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "200921782501",
+    "project_id": "gpsalarmclock-1191"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:200921782501:android:f184cbf8d22f4d0b",
+        "android_client_info": {
+          "package_name": "com.ebr163.socialauth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "200921782501-g3bbvtr9j5hm5u26uilselh55qaeh8kv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ebr163.socialauth",
+            "certificate_hash": "71665E2DD9F58168484444BAA402DEB964C88D12"
+          }
+        },
+        {
+          "client_id": "200921782501-vp97n0glaqr8la3odt4v5ahqfaggtp9t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARGmBXl_SRC8iiWD5Yo0xWC13_SyBAcDA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">socialauth</string>
+
+    <string name="googleClientId">200921782501-vp97n0glaqr8la3odt4v5ahqfaggtp9t.apps.googleusercontent.com</string>
+</resources>
