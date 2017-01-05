@@ -33,8 +33,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onProfileLoaded(GooglePlusProfile googlePlusProfile) {
                         Toast.makeText(MainActivity.this, googlePlusProfile.toString(), Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-                        finish();
                     }
                 });
                 break;

@@ -108,15 +108,7 @@ public class GooglePlusClient {
                             account.getId()));
                 }
             }
-        } else {
             Log.i(TAG, "onActivityResult: " + result.getStatus().isSuccess() + " " + result.getStatus().getStatusMessage() + " " + result.getStatus().getStatusCode());
-        }
-    }
-
-    private void free() {
-        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.stopAutoManage((FragmentActivity) activity);
-            mGoogleApiClient.disconnect();
         }
     }
 
@@ -127,9 +119,15 @@ public class GooglePlusClient {
                         @Override
                         public void onResult(Status status) {
                             googlePlusLogOutListener.logOut(status);
-                            free();
                         }
                     });
+        }
+    }
+
+    private void free() {
+        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.stopAutoManage((FragmentActivity) activity);
+            mGoogleApiClient.disconnect();
         }
     }
 
