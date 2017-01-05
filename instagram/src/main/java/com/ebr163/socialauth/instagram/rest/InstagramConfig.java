@@ -41,4 +41,8 @@ public final class InstagramConfig {
                 + "&redirect_uri=" + redirectUri
                 + "&response_type=token";
     }
+
+    public String getLogOutUrl() {
+        return "https://instagram.com/accounts/logout/";
+    }
 }

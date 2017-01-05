@@ -19,18 +19,28 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class InstagramClient {
-    public static final int INSTAGRAM_AUTH_CODE = 300;
+    private static final int INSTAGRAM_AUTH_CODE = 300;
+    private static final int INSTAGRAM_LOG_OUT_CODE = 301;
 
     private Fragment fragment;
     private Activity activity;
     private AuthorizationListener authListener;
+    private LogOutListener logOutListener;
 
     public interface InstagramProfileLoadedListener<T> {
         void onProfileLoaded(T t);
     }
 
+    public interface InstagramLogOutListener {
+        void onLogOut();
+    }
+
     private interface AuthorizationListener {
         void onAuthorized();
+    }
+
+    private interface LogOutListener {
+        void onLogOut();
     }
 
     private InstagramClient(String redirectUri, String clientId) {
@@ -68,7 +78,7 @@ public class InstagramClient {
         });
     }
 
-    public String getAccessToken() {
+    private String getAccessToken() {
         return InstagramPreferences.getManager().getInstagramAccessToken(getContext());
     }
 
@@ -77,22 +87,39 @@ public class InstagramClient {
             if (requestCode == INSTAGRAM_AUTH_CODE) {
                 String token = data.getStringExtra(InstagramUtils.INSTAGRAM_FILED_ACCESS_TOKEN);
                 InstagramPreferences.getManager().setInstagramAccessToken(getContext(), token);
-                this.authListener.onAuthorized();
+                authListener.onAuthorized();
+            } else if (requestCode == INSTAGRAM_LOG_OUT_CODE) {
+                logOutListener.onLogOut();
             }
         }
     }
 
-    public void authorize(AuthorizationListener listener) {
-        this.authListener = listener;
+    private void authorize(AuthorizationListener listener) {
+        authListener = listener;
         if (fragment != null) {
-            InstagramUtils.openAuthorizationActivity(fragment, INSTAGRAM_AUTH_CODE);
+            InstagramUtils.openAuthorizationActivity(fragment, INSTAGRAM_AUTH_CODE, InstagramUtils.LOG_IN);
         } else if (activity != null) {
-            InstagramUtils.openAuthorizationActivity(activity, INSTAGRAM_AUTH_CODE);
+            InstagramUtils.openAuthorizationActivity(activity, INSTAGRAM_AUTH_CODE, InstagramUtils.LOG_IN);
         }
     }
 
     private Context getContext() {
         if (fragment != null) return fragment.getActivity();
         else return activity;
+    }
+
+    public void logOut(final InstagramLogOutListener instagramLogOutListener) {
+        logOutListener = new LogOutListener() {
+            @Override
+            public void onLogOut() {
+                instagramLogOutListener.onLogOut();
+            }
+        };
+
+        if (fragment != null) {
+            InstagramUtils.openAuthorizationActivity(fragment, INSTAGRAM_LOG_OUT_CODE, InstagramUtils.LOG_OUT);
+        } else if (activity != null) {
+            InstagramUtils.openAuthorizationActivity(activity, INSTAGRAM_LOG_OUT_CODE, InstagramUtils.LOG_OUT);
+        }
     }
 }

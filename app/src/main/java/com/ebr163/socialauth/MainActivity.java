@@ -52,6 +52,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
                 break;
+            case R.id.instagram_logout:
+                instagramClient.logOut(new InstagramClient.InstagramLogOutListener() {
+                    @Override
+                    public void onLogOut() {
+                        Toast.makeText(MainActivity.this, "instagram logout", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                break;
             default:
                 break;
         }

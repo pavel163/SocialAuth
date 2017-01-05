@@ -1,6 +1,7 @@
 package com.ebr163.socialauth.instagram;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
@@ -21,6 +22,9 @@ public class InstagramAuthActivity extends Activity {
                 if (InstagramUtils.checkIsAuthDone(url)) {
                     setResult(RESULT_OK, InstagramUtils.getResultIntent(url));
                     finish();
+                } else if (InstagramUtils.checkIsLogOutDone(url)) {
+                    setResult(RESULT_OK, new Intent());
+                    finish();
                 }
             }
 
@@ -30,7 +34,11 @@ public class InstagramAuthActivity extends Activity {
             }
         });
 
-        authWebView.loadUrl(InstagramConfig.getInstance().getAuthorizationUrl());
+        if (getIntent().getIntExtra(InstagramUtils.CODE_ACTION, 0) == 0) {
+            authWebView.loadUrl(InstagramConfig.getInstance().getAuthorizationUrl());
+        } else {
+            authWebView.loadUrl(InstagramConfig.getInstance().getLogOutUrl());
+        }
     }
 
     @Override
