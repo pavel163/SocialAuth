@@ -10,11 +10,13 @@ import com.ebr163.socialauth.google.GooglePlusClient;
 import com.ebr163.socialauth.google.GooglePlusProfile;
 import com.ebr163.socialauth.instagram.InstagramClient;
 import com.ebr163.socialauth.instagram.model.InstagramProfile;
+import com.google.android.gms.common.api.Status;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     GooglePlusClient googlePlusClient;
     InstagramClient instagramClient;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +33,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onProfileLoaded(GooglePlusProfile googlePlusProfile) {
                         Toast.makeText(MainActivity.this, googlePlusProfile.toString(), Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+                        finish();
+                    }
+                });
+                break;
+            case R.id.google_plus_logout:
+                googlePlusClient.logOut(new GooglePlusClient.GooglePlusLogOutListener() {
+                    @Override
+                    public void logOut(Status status) {
+                        Toast.makeText(MainActivity.this, status.getStatusMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
                 break;

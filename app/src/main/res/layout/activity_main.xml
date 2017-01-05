@@ -8,22 +8,63 @@
     android:padding="@dimen/activity_vertical_margin"
     tools:context="com.ebr163.socialauth.MainActivity">
 
-    <Button
-        android:id="@+id/google_plus"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/holo_red_dark"
-        android:onClick="onClick"
-        android:text="Google Plus"
-        android:textColor="@android:color/white" />
+        android:orientation="horizontal">
 
-    <Button
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
-        android:id="@+id/instagram"
+        <Button
+            android:id="@+id/google_plus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="@android:color/holo_red_dark"
+            android:onClick="onClick"
+            android:text="Google Plus"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/google_plus_logout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_weight="1"
+            android:background="@android:color/holo_red_dark"
+            android:onClick="onClick"
+            android:text="Google Plus Logout"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/darker_gray"
-        android:onClick="onClick"
-        android:text="instagram"
-        android:textColor="@android:color/white" />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/instagram"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:layout_weight="1"
+            android:background="@android:color/darker_gray"
+            android:onClick="onClick"
+            android:text="instagram"
+            android:textColor="@android:color/white" />
+
+        <Button
+            android:id="@+id/instagram_logout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:layout_marginTop="@dimen/activity_horizontal_margin"
+            android:layout_weight="1"
+            android:background="@android:color/darker_gray"
+            android:onClick="onClick"
+            android:text="instagram logout"
+            android:textColor="@android:color/white" />
+
+    </LinearLayout>
+
 </LinearLayout>
