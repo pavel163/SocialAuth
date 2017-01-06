@@ -130,11 +130,4 @@ public class GooglePlusClient {
             mGoogleApiClient.disconnect();
         }
     }
-
-    public void onDestroy() {
-        fragment = null;
-        activity = null;
-        googlePlusProfileLoadedListener = null;
-        mGoogleApiClient = null;
-    }
 }

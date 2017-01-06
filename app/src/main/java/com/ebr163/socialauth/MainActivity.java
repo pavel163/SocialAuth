@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     InstagramClient instagramClient;
     FacebookClient facebookClient;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onProfileLoaded(GooglePlusProfile googlePlusProfile) {
                         Toast.makeText(MainActivity.this, googlePlusProfile.toString(), Toast.LENGTH_SHORT).show();
+                        toNextScreen();
                     }
                 });
                 break;
@@ -49,10 +51,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
                 break;
             case R.id.instagram:
-                instagramClient.getProfile(new InstagramClient.InstagramProfileLoadedListener<InstagramProfile>() {
+                instagramClient.getProfile(new InstagramClient.InstagramProfileLoadedListener() {
                     @Override
                     public void onProfileLoaded(InstagramProfile instagramProfile) {
                         Toast.makeText(MainActivity.this, instagramProfile.toString(), Toast.LENGTH_SHORT).show();
+                        toNextScreen();
                     }
                 });
                 break;
@@ -69,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     @Override
                     public void onProfileLoaded(FacebookProfile facebookProfile) {
                         Toast.makeText(MainActivity.this, "facebook", Toast.LENGTH_SHORT).show();
+                        toNextScreen();
                     }
                 });
                 break;
@@ -91,5 +95,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         googlePlusClient.onActivityResult(requestCode, resultCode, data);
         instagramClient.onActivityResult(requestCode, resultCode, data);
         facebookClient.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void toNextScreen() {
+        startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+        finish();
     }
 }

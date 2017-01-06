@@ -27,8 +27,8 @@ public class InstagramClient {
     private AuthorizationListener authListener;
     private LogOutListener logOutListener;
 
-    public interface InstagramProfileLoadedListener<T> {
-        void onProfileLoaded(T t);
+    public interface InstagramProfileLoadedListener {
+        void onProfileLoaded(InstagramProfile instagramProfile);
     }
 
     public interface InstagramLogOutListener {
@@ -58,7 +58,7 @@ public class InstagramClient {
         this.activity = activity;
     }
 
-    public void getProfile(final InstagramProfileLoadedListener<InstagramProfile> listener) {
+    public void getProfile(final InstagramProfileLoadedListener listener) {
         authorize(new AuthorizationListener() {
             @Override
             public void onAuthorized() {
@@ -121,12 +121,5 @@ public class InstagramClient {
         } else if (activity != null) {
             InstagramUtils.openAuthorizationActivity(activity, INSTAGRAM_LOG_OUT_CODE, InstagramUtils.LOG_OUT);
         }
-    }
-
-    public void onDestroy() {
-        fragment = null;
-        activity = null;
-        authListener = null;
-        logOutListener = null;
     }
 }
