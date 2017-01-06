@@ -5,4 +5,5 @@
 
     <string name="instagramRedirectUri">https://oauth.vk.com/blank.html</string>
     <string name="instagramClientId">bc0cfc8d49664f9eb3f920acef8c73e1</string>
+    <string name="facebook_app_id">360833260945108</string>
 </resources>

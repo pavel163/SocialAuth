@@ -122,4 +122,11 @@ public class InstagramClient {
             InstagramUtils.openAuthorizationActivity(activity, INSTAGRAM_LOG_OUT_CODE, InstagramUtils.LOG_OUT);
         }
     }
+
+    public void onDestroy() {
+        fragment = null;
+        activity = null;
+        authListener = null;
+        logOutListener = null;
+    }
 }

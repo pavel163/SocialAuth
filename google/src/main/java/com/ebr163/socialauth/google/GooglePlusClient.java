@@ -134,5 +134,7 @@ public class GooglePlusClient {
     public void onDestroy() {
         fragment = null;
         activity = null;
+        googlePlusProfileLoadedListener = null;
+        mGoogleApiClient = null;
     }
 }

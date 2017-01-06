@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.ebr163.socialauth.facebook.FacebookClient;
+import com.ebr163.socialauth.facebook.model.FacebookProfile;
 import com.ebr163.socialauth.google.GooglePlusClient;
 import com.ebr163.socialauth.google.GooglePlusProfile;
 import com.ebr163.socialauth.instagram.InstagramClient;
@@ -16,6 +18,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     GooglePlusClient googlePlusClient;
     InstagramClient instagramClient;
+    FacebookClient facebookClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         googlePlusClient = new GooglePlusClient(this, getString(R.string.googleClientId));
         instagramClient = new InstagramClient(this, getString(R.string.instagramRedirectUri), getString(R.string.instagramClientId));
+        facebookClient = new FacebookClient(this);
     }
 
     @Override
@@ -60,6 +64,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
                 break;
+            case R.id.facebook:
+                facebookClient.getProfile(new FacebookClient.FacebookProfileLoadedListener() {
+                    @Override
+                    public void onProfileLoaded(FacebookProfile facebookProfile) {
+                        Toast.makeText(MainActivity.this, "facebook", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                break;
+            case R.id.facebook_logout:
+                facebookClient.logOut(new FacebookClient.FacebookLogOutListener() {
+                    @Override
+                    public void onLogOut() {
+                        Toast.makeText(MainActivity.this, "facebook logout", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                break;
             default:
                 break;
         }
@@ -70,5 +90,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onActivityResult(requestCode, resultCode, data);
         googlePlusClient.onActivityResult(requestCode, resultCode, data);
         instagramClient.onActivityResult(requestCode, resultCode, data);
+        facebookClient.onActivityResult(requestCode, resultCode, data);
     }
 }
