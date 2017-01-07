@@ -12,14 +12,17 @@ import com.ebr163.socialauth.google.GooglePlusClient;
 import com.ebr163.socialauth.google.GooglePlusProfile;
 import com.ebr163.socialauth.instagram.InstagramClient;
 import com.ebr163.socialauth.instagram.model.InstagramProfile;
+import com.ebr163.socialauth.vk.VkClient;
+import com.ebr163.socialauth.vk.model.VkProfile;
 import com.google.android.gms.common.api.Status;
+import com.vk.sdk.api.VKError;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, VkClient.VkProfileLoadedListener, VkClient.VkLogOutListener {
 
     GooglePlusClient googlePlusClient;
     InstagramClient instagramClient;
     FacebookClient facebookClient;
-
+    VkClient vkClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         googlePlusClient = new GooglePlusClient(this, getString(R.string.googleClientId));
         instagramClient = new InstagramClient(this, getString(R.string.instagramRedirectUri), getString(R.string.instagramClientId));
         facebookClient = new FacebookClient(this);
+        vkClient = new VkClient(this);
     }
 
     @Override
@@ -84,6 +88,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     }
                 });
                 break;
+            case R.id.vk:
+                vkClient.getProfile();
+                break;
+            case R.id.vk_logout:
+                vkClient.logOut();
+                break;
             default:
                 break;
         }
@@ -95,10 +105,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         googlePlusClient.onActivityResult(requestCode, resultCode, data);
         instagramClient.onActivityResult(requestCode, resultCode, data);
         facebookClient.onActivityResult(requestCode, resultCode, data);
+        vkClient.onActivityResult(requestCode, resultCode, data);
     }
 
     private void toNextScreen() {
         startActivity(new Intent(MainActivity.this, ProfileActivity.class));
         finish();
+    }
+
+    @Override
+    public void logOutVk() {
+        Toast.makeText(MainActivity.this, "vk logout", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onVkProfileLoaded(VkProfile vkProfile) {
+        Toast.makeText(MainActivity.this, "vk", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onErrorVkProfileLoaded(VKError error) {
     }
 }

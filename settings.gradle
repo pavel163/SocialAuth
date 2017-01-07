@@ -1,5 +1,5 @@
 include ':app'
-//include ':vk'
+include ':vk'
 include ':instagram'
 //include ':twitter'
 include ':facebook'

@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/google/google.iml" filepath="$PROJECT_DIR$/google/google.iml" />
       <module fileurl="file://$PROJECT_DIR$/instagram/instagram.iml" filepath="$PROJECT_DIR$/instagram/instagram.iml" />
       <module fileurl="file://$PROJECT_DIR$/socialauth.iml" filepath="$PROJECT_DIR$/socialauth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vk/vk.iml" filepath="$PROJECT_DIR$/vk/vk.iml" />
     </modules>
   </component>
 </project>

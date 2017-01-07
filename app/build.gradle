@@ -29,5 +29,6 @@ dependencies {
     compile project(':google')
     compile project(':instagram')
     compile project(':facebook')
+    compile project(':vk')
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
 }
