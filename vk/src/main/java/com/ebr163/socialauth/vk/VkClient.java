@@ -40,7 +40,7 @@ public class VkClient {
     }
 
     public interface VkLogOutListener {
-        void logOutVk();
+        void onLogOutVk();
     }
 
     public VkClient(Fragment fragment) {
@@ -132,6 +132,6 @@ public class VkClient {
 
     public void logOut() {
         VKSdk.logout();
-        vkLogOutListener.logOutVk();
+        vkLogOutListener.onLogOutVk();
     }
 }

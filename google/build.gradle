@@ -28,6 +28,7 @@ dependencies {
     })
     testCompile 'junit:junit:4.12'
 
+    compile "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
     compile "com.google.android.gms:play-services-auth:$GOOGLE_PLAY_SERVICE_VERSION"
     compile "com.google.android.gms:play-services-plus:$GOOGLE_PLAY_SERVICE_VERSION"
 }

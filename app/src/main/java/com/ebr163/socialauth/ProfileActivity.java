@@ -46,12 +46,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
                 });
                 break;
             case R.id.facebook_logout:
-                facebookClient.logOut(new FacebookClient.FacebookLogOutListener() {
-                    @Override
-                    public void onLogOut() {
-                        signOut();
-                    }
-                });
                 break;
             default:
                 break;

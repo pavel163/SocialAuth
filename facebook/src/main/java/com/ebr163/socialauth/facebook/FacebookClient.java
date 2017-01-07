@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 
 import com.ebr163.socialauth.facebook.model.FacebookProfile;
 import com.ebr163.socialauth.facebook.model.Location;
@@ -35,13 +34,24 @@ public class FacebookClient {
     private Fragment fragment;
     private CallbackManager callbackManager;
     private FacebookProfileLoadedListener facebookProfileLoadedListener;
+    private FacebookLogOutListener facebookLogOutListener;
 
     public interface FacebookProfileLoadedListener {
-        void onProfileLoaded(FacebookProfile facebookProfile);
+        void onFacebookProfileLoaded(FacebookProfile facebookProfile);
+
+        void onErrorFacebookProfileLoaded(FacebookException exception);
     }
 
     public interface FacebookLogOutListener {
-        void onLogOut();
+        void onLogOutFacebook();
+    }
+
+    public void setFacebookProfileLoadedListener(FacebookProfileLoadedListener facebookProfileLoadedListener) {
+        this.facebookProfileLoadedListener = facebookProfileLoadedListener;
+    }
+
+    public void setFacebookLogOutListener(FacebookLogOutListener facebookLogOutListener) {
+        this.facebookLogOutListener = facebookLogOutListener;
     }
 
     public FacebookClient(Activity activity) {
@@ -57,7 +67,6 @@ public class FacebookClient {
                         new GraphRequest.GraphJSONObjectCallback() {
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
-                                Log.v("LoginActivity", response.toString());
                                 FacebookProfile facebookProfile = new FacebookProfile();
                                 facebookProfile.accessToken = loginResult.getAccessToken().getToken();
                                 try {
@@ -84,7 +93,7 @@ public class FacebookClient {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
-                                facebookProfileLoadedListener.onProfileLoaded(facebookProfile);
+                                facebookProfileLoadedListener.onFacebookProfileLoaded(facebookProfile);
                             }
                         });
                 Bundle parameters = new Bundle();
@@ -99,26 +108,17 @@ public class FacebookClient {
 
             @Override
             public void onError(FacebookException exception) {
-                Log.i("FacebookClient", "onError: " + exception.getMessage());
+                facebookProfileLoadedListener.onErrorFacebookProfileLoaded(exception);
             }
         });
     }
 
-    public FacebookClient(Activity activity, Fragment fragment) {
-        this(activity);
+    public FacebookClient(Fragment fragment) {
+        this(fragment.getActivity());
         this.fragment = fragment;
     }
 
-    public void getProfile(FacebookProfileLoadedListener facebookProfileLoadedListener) {
-        this.facebookProfileLoadedListener = facebookProfileLoadedListener;
-        fbAuth();
-    }
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-    }
-
-    private void fbAuth() {
+    public void getProfile() {
         if (fragment == null) {
             LoginManager.getInstance().logInWithReadPermissions(activity, facebookPermissions);
         } else {
@@ -126,7 +126,11 @@ public class FacebookClient {
         }
     }
 
-    public void logOut(final FacebookLogOutListener facebookLogOutListener) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
+
+    public void logOut() {
         if (AccessToken.getCurrentAccessToken() == null) {
             return;
         }
@@ -135,7 +139,7 @@ public class FacebookClient {
             @Override
             public void onCompleted(GraphResponse graphResponse) {
                 LoginManager.getInstance().logOut();
-                facebookLogOutListener.onLogOut();
+                facebookLogOutListener.onLogOutFacebook();
             }
         }).executeAsync();
     }

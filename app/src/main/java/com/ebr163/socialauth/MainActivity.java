@@ -14,10 +14,13 @@ import com.ebr163.socialauth.instagram.InstagramClient;
 import com.ebr163.socialauth.instagram.model.InstagramProfile;
 import com.ebr163.socialauth.vk.VkClient;
 import com.ebr163.socialauth.vk.model.VkProfile;
+import com.facebook.FacebookException;
 import com.google.android.gms.common.api.Status;
 import com.vk.sdk.api.VKError;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, VkClient.VkProfileLoadedListener, VkClient.VkLogOutListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,
+        VkClient.VkProfileLoadedListener, VkClient.VkLogOutListener,
+        FacebookClient.FacebookProfileLoadedListener, FacebookClient.FacebookLogOutListener {
 
     GooglePlusClient googlePlusClient;
     InstagramClient instagramClient;
@@ -32,6 +35,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         instagramClient = new InstagramClient(this, getString(R.string.instagramRedirectUri), getString(R.string.instagramClientId));
         facebookClient = new FacebookClient(this);
         vkClient = new VkClient(this);
+        vkClient.setVkLogOutListener(this);
+        vkClient.setVkProfileLoadedListener(this);
     }
 
     @Override
@@ -72,21 +77,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
                 break;
             case R.id.facebook:
-                facebookClient.getProfile(new FacebookClient.FacebookProfileLoadedListener() {
-                    @Override
-                    public void onProfileLoaded(FacebookProfile facebookProfile) {
-                        Toast.makeText(MainActivity.this, "facebook", Toast.LENGTH_SHORT).show();
-                        toNextScreen();
-                    }
-                });
+                facebookClient.getProfile();
                 break;
             case R.id.facebook_logout:
-                facebookClient.logOut(new FacebookClient.FacebookLogOutListener() {
-                    @Override
-                    public void onLogOut() {
-                        Toast.makeText(MainActivity.this, "facebook logout", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                facebookClient.logOut();
                 break;
             case R.id.vk:
                 vkClient.getProfile();
@@ -114,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void logOutVk() {
+    public void onLogOutVk() {
         Toast.makeText(MainActivity.this, "vk logout", Toast.LENGTH_SHORT).show();
     }
 
@@ -125,5 +119,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onErrorVkProfileLoaded(VKError error) {
+    }
+
+    @Override
+    public void onLogOutFacebook() {
+        Toast.makeText(MainActivity.this, "facebook logout", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onFacebookProfileLoaded(FacebookProfile facebookProfile) {
+        Toast.makeText(MainActivity.this, "facebook", Toast.LENGTH_SHORT).show();
+        toNextScreen();
+    }
+
+    @Override
+    public void onErrorFacebookProfileLoaded(FacebookException exception) {
     }
 }
