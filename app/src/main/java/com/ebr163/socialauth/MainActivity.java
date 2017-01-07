@@ -20,7 +20,8 @@ import com.vk.sdk.api.VKError;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,
         VkClient.VkProfileLoadedListener, VkClient.VkLogOutListener,
-        FacebookClient.FacebookProfileLoadedListener, FacebookClient.FacebookLogOutListener {
+        FacebookClient.FacebookProfileLoadedListener, FacebookClient.FacebookLogOutListener,
+        GooglePlusClient.GooglePlusProfileLoadedListener, GooglePlusClient.GooglePlusLogOutListener {
 
     GooglePlusClient googlePlusClient;
     InstagramClient instagramClient;
@@ -31,9 +32,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        googlePlusClient = new GooglePlusClient(this, getString(R.string.googleClientId));
+        googlePlusClient = new GooglePlusClient(this);
+        googlePlusClient.setGooglePlusProfileLoadedListener(this);
+        googlePlusClient.setGooglePlusLogOutListener(this);
+
         instagramClient = new InstagramClient(this, getString(R.string.instagramRedirectUri), getString(R.string.instagramClientId));
+
         facebookClient = new FacebookClient(this);
+        facebookClient.setFacebookProfileLoadedListener(this);
+        facebookClient.setFacebookLogOutListener(this);
+
         vkClient = new VkClient(this);
         vkClient.setVkLogOutListener(this);
         vkClient.setVkProfileLoadedListener(this);
@@ -43,21 +51,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.google_plus:
-                googlePlusClient.getProfile(new GooglePlusClient.GooglePlusProfileLoadedListener() {
-                    @Override
-                    public void onProfileLoaded(GooglePlusProfile googlePlusProfile) {
-                        Toast.makeText(MainActivity.this, googlePlusProfile.toString(), Toast.LENGTH_SHORT).show();
-                        toNextScreen();
-                    }
-                });
+                googlePlusClient.getProfile();
                 break;
             case R.id.google_plus_logout:
-                googlePlusClient.logOut(new GooglePlusClient.GooglePlusLogOutListener() {
-                    @Override
-                    public void logOut(Status status) {
-                        Toast.makeText(MainActivity.this, status.getStatusMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
+                googlePlusClient.logOut();
                 break;
             case R.id.instagram:
                 instagramClient.getProfile(new InstagramClient.InstagramProfileLoadedListener() {
@@ -103,8 +100,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void toNextScreen() {
-        startActivity(new Intent(MainActivity.this, ProfileActivity.class));
-        finish();
+//        startActivity(new Intent(MainActivity.this, ProfileActivity.class));
+//        finish();
     }
 
     @Override
@@ -134,5 +131,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onErrorFacebookProfileLoaded(FacebookException exception) {
+    }
+
+    @Override
+    public void onLogOutGooglePlus(Status status) {
+        Toast.makeText(MainActivity.this, status.getStatusMessage(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onGooglePlusProfileLoaded(GooglePlusProfile googlePlusProfile) {
+        Toast.makeText(MainActivity.this, googlePlusProfile.toString(), Toast.LENGTH_SHORT).show();
+        toNextScreen();
+    }
+
+    @Override
+    public void onErrorGooglePlusProfileLoaded(Exception exeption) {
     }
 }

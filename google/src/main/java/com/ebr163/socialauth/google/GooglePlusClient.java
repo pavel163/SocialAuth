@@ -20,55 +20,64 @@ import com.google.android.gms.common.api.Status;
 public class GooglePlusClient {
 
     private static final String TAG = "GooglePlus";
+    private static final String GOOGLE_APP_ID = "google_app_id";
 
     private static final int RC_SIGN_IN = 8;
     private Activity activity;
     private GoogleApiClient mGoogleApiClient;
     private Fragment fragment;
     private GooglePlusProfileLoadedListener googlePlusProfileLoadedListener;
-    private String clientId;
+    private GooglePlusLogOutListener googlePlusLogOutListener;
 
     public interface GooglePlusProfileLoadedListener {
-        void onProfileLoaded(GooglePlusProfile googlePlusProfile);
+        void onGooglePlusProfileLoaded(GooglePlusProfile googlePlusProfile);
+
+        void onErrorGooglePlusProfileLoaded(Exception exeption);
     }
 
     public interface GooglePlusLogOutListener {
-        void logOut(Status status);
+        void onLogOutGooglePlus(Status status);
     }
 
-    public GooglePlusClient(Activity activity, Fragment fragment, String clientId) {
-        this(activity, clientId);
+    public void setGooglePlusProfileLoadedListener(GooglePlusProfileLoadedListener googlePlusProfileLoadedListener) {
+        this.googlePlusProfileLoadedListener = googlePlusProfileLoadedListener;
+    }
+
+    public void setGooglePlusLogOutListener(GooglePlusLogOutListener googlePlusLogOutListener) {
+        this.googlePlusLogOutListener = googlePlusLogOutListener;
+    }
+
+    public GooglePlusClient(Fragment fragment) {
+        this(fragment.getActivity());
         this.fragment = fragment;
         init();
     }
 
-    public GooglePlusClient(Activity activity, String clientId) {
+    public GooglePlusClient(Activity activity) {
         this.activity = activity;
-        this.clientId = clientId;
         init();
     }
 
     private void init() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(clientId)
+                .requestIdToken(getStringResByName(GOOGLE_APP_ID))
                 .requestProfile()
                 .requestEmail()
                 .build();
 
-        mGoogleApiClient = new GoogleApiClient.Builder(this.activity)
+        mGoogleApiClient = new GoogleApiClient.Builder(activity)
                 .enableAutoManage((FragmentActivity) activity,
                         new GoogleApiClient.OnConnectionFailedListener() {
                             @Override
                             public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+                                googlePlusProfileLoadedListener.onErrorGooglePlusProfileLoaded(new Exception(connectionResult.getErrorMessage()));
                             }
                         })
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
     }
 
-    public void getProfile(GooglePlusProfileLoadedListener googlePlusProfileLoadedListener) {
-        this.googlePlusProfileLoadedListener = googlePlusProfileLoadedListener;
+    public void getProfile() {
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
         if (opr.isDone()) {
             GoogleSignInResult result = opr.get();
@@ -100,7 +109,7 @@ public class GooglePlusClient {
                     avatar = account.getPhotoUrl().toString();
                 }
                 if (account != null) {
-                    googlePlusProfileLoadedListener.onProfileLoaded(new GooglePlusProfile(
+                    googlePlusProfileLoadedListener.onGooglePlusProfileLoaded(new GooglePlusProfile(
                             account.getDisplayName(),
                             account.getIdToken(),
                             avatar,
@@ -112,15 +121,25 @@ public class GooglePlusClient {
         }
     }
 
-    public void logOut(final GooglePlusLogOutListener googlePlusLogOutListener) {
+    public void logOut() {
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
             Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
                     new ResultCallback<Status>() {
                         @Override
                         public void onResult(Status status) {
-                            googlePlusLogOutListener.logOut(status);
+                            googlePlusLogOutListener.onLogOutGooglePlus(status);
                         }
                     });
+        }
+    }
+
+    private String getStringResByName(String aString) {
+        int resId = activity.getResources().getIdentifier(aString, "string", activity.getPackageName());
+        try {
+            return activity.getResources().getString(resId);
+        } catch (Exception e) {
+            googlePlusProfileLoadedListener.onErrorGooglePlusProfileLoaded(new Exception("Not find google_app_id"));
+            return null;
         }
     }
 

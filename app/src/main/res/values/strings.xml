@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">SocialAuth</string>
 
-    <string name="googleClientId">200921782501-vp97n0glaqr8la3odt4v5ahqfaggtp9t.apps.googleusercontent.com</string>
+    <string name="google_app_id">200921782501-vp97n0glaqr8la3odt4v5ahqfaggtp9t.apps.googleusercontent.com</string>
 
     <string name="instagramRedirectUri">https://oauth.vk.com/blank.html</string>
     <string name="instagramClientId">bc0cfc8d49664f9eb3f920acef8c73e1</string>

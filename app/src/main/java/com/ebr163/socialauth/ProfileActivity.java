@@ -9,7 +9,6 @@ import android.widget.Toast;
 import com.ebr163.socialauth.facebook.FacebookClient;
 import com.ebr163.socialauth.google.GooglePlusClient;
 import com.ebr163.socialauth.instagram.InstagramClient;
-import com.google.android.gms.common.api.Status;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -21,7 +20,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        googlePlusClient = new GooglePlusClient(this, getString(R.string.googleClientId));
+        googlePlusClient = new GooglePlusClient(this);
         instagramClient = new InstagramClient(this, getString(R.string.instagramRedirectUri), getString(R.string.instagramClientId));
         facebookClient = new FacebookClient(this);
     }
@@ -30,12 +29,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.google_plus_logout:
-                googlePlusClient.logOut(new GooglePlusClient.GooglePlusLogOutListener() {
-                    @Override
-                    public void logOut(Status status) {
-                        signOut();
-                    }
-                });
                 break;
             case R.id.instagram_logout:
                 instagramClient.logOut(new InstagramClient.InstagramLogOutListener() {
