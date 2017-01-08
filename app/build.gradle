@@ -35,11 +35,12 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
-    testCompile 'junit:junit:4.12'
     compile project(':google')
     compile project(':instagram')
     compile project(':facebook')
     compile project(':vk')
     compile project(':twitter')
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    testCompile 'junit:junit:4.12'
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
 }

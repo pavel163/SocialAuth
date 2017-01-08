@@ -22,6 +22,11 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
+        <activity android:name=".TwitterActivity" />
+        <activity android:name=".FacebookActivity" />
+        <activity android:name=".InstagramActivity" />
+        <activity android:name=".GooglePlusActivity" />
+        <activity android:name=".VkActivity"></activity>
     </application>
 
 </manifest>
