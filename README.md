@@ -30,7 +30,7 @@ buildscript {
     }
 }
 ```
-And look at an example <a href="https://github.com/pavel163/SocialAuth/blob/master/app/src/main/java/com/ebr163/socialauth/TwitterActivity.java">TwitterActivity</a>
+And look at an example (May be a fragment instead of activity) <a href="https://github.com/pavel163/SocialAuth/blob/master/app/src/main/java/com/ebr163/socialauth/TwitterActivity.java">TwitterActivity</a>
 
 ###Facebook
 Create new application at https://developers.facebook.com/apps<br />
@@ -57,5 +57,60 @@ Add a meta-data element to the application element:
     ...
 </application>
 ```
-And look at an example <a href="https://github.com/pavel163/SocialAuth/blob/master/app/src/main/java/com/ebr163/socialauth/FacebookActivity.java">FacebookActivity</a>
+And look at an example (May be a fragment instead of activity) <a href="https://github.com/pavel163/SocialAuth/blob/master/app/src/main/java/com/ebr163/socialauth/FacebookActivity.java">FacebookActivity</a>
 
+###VK
+Create new application at https://vk.com/dev<br />
+Download via Gradle:
+```gradle
+compile 'com.github.pavel163.SocialAuth:vk:1.0.0'
+```
+In integers.xml
+```xml
+<integer name="com_vk_sdk_AppId">your_app_id</integer>
+```
+Create Custom Application:
+```java
+public class BaseApplication extends VkApplication {
+    
+    @Override
+    public void onCreate() {
+        super.onCreate();
+    }
+
+    @Override
+    protected void tokenIsInvalid() {
+        // invalid token
+    }
+}
+```
+And look at an example (May be a fragment instead of activity) <a href="https://github.com/pavel163/SocialAuth/blob/master/app/src/main/java/com/ebr163/socialauth/VkActivity.java">VkActivity</a>
+
+###Instagram
+Create new application at https://www.instagram.com/developer/clients/manage/<br />
+Don't forget to enable implicit OAuth in application security settings.
+
+Download via Gradle:
+```gradle
+compile 'com.github.pavel163.SocialAuth:instagram:1.0.0'
+```
+In strings.xml
+```xml
+<string name="instagram_redirect_uri">your_redirect_uri</string>
+<string name="instagram_app_id">your_app_id</string>
+```
+And look at an example (May be a fragment instead of activity) <a href="https://github.com/pavel163/SocialAuth/blob/master/app/src/main/java/com/ebr163/socialauth/InstagramActivity.java">InstagramActivity</a>
+
+###Google+
+Create new application at https://console.developers.google.com/<br />
+Don't forget to enable google plus api.<br />
+
+Download via Gradle:
+```gradle
+compile 'com.github.pavel163.SocialAuth:google:1.0.0'
+```
+In strings.xml
+```xml
+<string name="google_app_id">your_app_id</string>
+```
+And look at an example (May be a fragment instead of activity) <a href="https://github.com/pavel163/SocialAuth/blob/master/app/src/main/java/com/ebr163/socialauth/GooglePlusActivity.java">GooglePlusActivity</a>
