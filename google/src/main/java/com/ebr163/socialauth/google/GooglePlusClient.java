@@ -1,9 +1,10 @@
 package com.ebr163.socialauth.google;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
@@ -133,12 +134,18 @@ public class GooglePlusClient {
         }
     }
 
+    private Context getContext() {
+        if (fragment != null) return fragment.getActivity();
+        else return activity;
+    }
+
     private String getStringResByName(String aString) {
-        int resId = activity.getResources().getIdentifier(aString, "string", activity.getPackageName());
+        Context context = getContext();
+        int resId = context.getResources().getIdentifier(aString, "string", context.getPackageName());
         try {
-            return activity.getResources().getString(resId);
+            return context.getResources().getString(resId);
         } catch (Exception e) {
-            googlePlusProfileLoadedListener.onErrorGooglePlusProfileLoaded(new Exception("Not find google_app_id"));
+            googlePlusProfileLoadedListener.onErrorGooglePlusProfileLoaded(new Exception("Not find " + aString));
             return null;
         }
     }

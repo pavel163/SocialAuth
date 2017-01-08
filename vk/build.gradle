@@ -28,6 +28,5 @@ dependencies {
     })
     testCompile 'junit:junit:4.12'
 
-    compile "com.android.support:appcompat-v7:$SUPPORT_LIBRARY_VERSION"
     compile "com.vk:androidsdk:$VK_SDK_VERSION"
 }

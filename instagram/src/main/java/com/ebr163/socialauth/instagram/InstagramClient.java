@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 import com.ebr163.socialauth.instagram.model.InstagramProfile;
 import com.ebr163.socialauth.instagram.model.InstagramResponse;
@@ -21,18 +20,24 @@ import retrofit2.Response;
 public class InstagramClient {
     private static final int INSTAGRAM_AUTH_CODE = 300;
     private static final int INSTAGRAM_LOG_OUT_CODE = 301;
+    private static final String INSTAGRAM_APP_ID = "instagram_app_id";
+    private static final String INSTAGRAM_REDIRECT_URI = "instagram_redirect_uri";
 
     private Fragment fragment;
     private Activity activity;
     private AuthorizationListener authListener;
     private LogOutListener logOutListener;
+    private InstagramLogOutListener instagramLogOutListener;
+    private InstagramProfileLoadedListener instagramProfileLoadedListener;
 
     public interface InstagramProfileLoadedListener {
-        void onProfileLoaded(InstagramProfile instagramProfile);
+        void onInstagramProfileLoaded(InstagramProfile instagramProfile);
+
+        void onErrorInstagramProfileLoaded(Exception exception);
     }
 
     public interface InstagramLogOutListener {
-        void onLogOut();
+        void onLogOutInstagram();
     }
 
     private interface AuthorizationListener {
@@ -43,22 +48,30 @@ public class InstagramClient {
         void onLogOut();
     }
 
-    private InstagramClient(String redirectUri, String clientId) {
-        InstagramConfig.getInstance().setClientId(clientId);
-        InstagramConfig.getInstance().setRedirectUri(redirectUri);
-    }
-
-    public InstagramClient(Fragment fragment, String redirectUri, String clientId) {
-        this(redirectUri, clientId);
+    public InstagramClient(Fragment fragment) {
         this.fragment = fragment;
+        init();
     }
 
-    public InstagramClient(Activity activity, String redirectUri, String clientId) {
-        this(redirectUri, clientId);
+    public InstagramClient(Activity activity) {
         this.activity = activity;
+        init();
     }
 
-    public void getProfile(final InstagramProfileLoadedListener listener) {
+    private void init() {
+        InstagramConfig.getInstance().setClientId(getStringResByName(INSTAGRAM_APP_ID));
+        InstagramConfig.getInstance().setRedirectUri(getStringResByName(INSTAGRAM_REDIRECT_URI));
+    }
+
+    public void setInstagramLogOutListener(InstagramLogOutListener instagramLogOutListener) {
+        this.instagramLogOutListener = instagramLogOutListener;
+    }
+
+    public void setInstagramProfileLoadedListener(InstagramProfileLoadedListener instagramProfileLoadedListener) {
+        this.instagramProfileLoadedListener = instagramProfileLoadedListener;
+    }
+
+    public void getProfile() {
         authorize(new AuthorizationListener() {
             @Override
             public void onAuthorized() {
@@ -66,12 +79,12 @@ public class InstagramClient {
                         .getProfile(getAccessToken()).enqueue(new Callback<InstagramResponse<InstagramProfile>>() {
                     @Override
                     public void onResponse(Call<InstagramResponse<InstagramProfile>> call, Response<InstagramResponse<InstagramProfile>> response) {
-                        listener.onProfileLoaded(response.body().getData());
+                        instagramProfileLoadedListener.onInstagramProfileLoaded(response.body().getData());
                     }
 
                     @Override
                     public void onFailure(Call<InstagramResponse<InstagramProfile>> call, Throwable t) {
-                        Log.i("TAG", "onFailure: " + t.getMessage());
+                        instagramProfileLoadedListener.onErrorInstagramProfileLoaded(new Exception(t));
                     }
                 });
             }
@@ -108,11 +121,22 @@ public class InstagramClient {
         else return activity;
     }
 
-    public void logOut(final InstagramLogOutListener instagramLogOutListener) {
+    private String getStringResByName(String aString) {
+        Context context = getContext();
+        int resId = context.getResources().getIdentifier(aString, "string", context.getPackageName());
+        try {
+            return context.getResources().getString(resId);
+        } catch (Exception e) {
+            instagramProfileLoadedListener.onErrorInstagramProfileLoaded(new Exception("Not find " + aString));
+            return null;
+        }
+    }
+
+    public void logOut() {
         logOutListener = new LogOutListener() {
             @Override
             public void onLogOut() {
-                instagramLogOutListener.onLogOut();
+                instagramLogOutListener.onLogOutInstagram();
             }
         };
 

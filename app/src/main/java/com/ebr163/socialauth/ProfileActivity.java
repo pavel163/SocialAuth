@@ -21,7 +21,7 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         googlePlusClient = new GooglePlusClient(this);
-        instagramClient = new InstagramClient(this, getString(R.string.instagramRedirectUri), getString(R.string.instagramClientId));
+        instagramClient = new InstagramClient(this);
         facebookClient = new FacebookClient(this);
     }
 
@@ -31,12 +31,6 @@ public class ProfileActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.google_plus_logout:
                 break;
             case R.id.instagram_logout:
-                instagramClient.logOut(new InstagramClient.InstagramLogOutListener() {
-                    @Override
-                    public void onLogOut() {
-                        signOut();
-                    }
-                });
                 break;
             case R.id.facebook_logout:
                 break;
