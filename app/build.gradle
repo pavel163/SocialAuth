@@ -1,5 +1,19 @@
 apply plugin: 'com.android.application'
 
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url 'https://maven.fabric.io/public' }
+    }
+    dependencies {
+        classpath 'io.fabric.tools:gradle:1.+'
+    }
+}
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -26,5 +40,6 @@ dependencies {
     compile project(':instagram')
     compile project(':facebook')
     compile project(':vk')
+    compile project(':twitter')
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
 }

@@ -5,5 +5,9 @@
 
     <string name="instagram_redirect_uri">https://oauth.vk.com/blank.html</string>
     <string name="instagram_app_id">bc0cfc8d49664f9eb3f920acef8c73e1</string>
+
     <string name="facebook_app_id">360833260945108</string>
+
+    <string name="twitter_consumer_key">GpiqBsOZiIwApJVcPQ72mgESz</string>
+    <string name="twitter_consumer_secret">UoiX7PzvZlVHUZR92nLijuS08rIw50Z5WtWYYNqD95eyH78XWW</string>
 </resources>

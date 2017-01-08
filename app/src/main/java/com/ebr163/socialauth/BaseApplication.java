@@ -26,6 +26,8 @@ public class BaseApplication extends VkApplication {
             return;
         }
         refWatcher = LeakCanary.install(this);
+
+
     }
 
     @Override

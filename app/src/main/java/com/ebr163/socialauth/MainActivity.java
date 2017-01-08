@@ -12,6 +12,8 @@ import com.ebr163.socialauth.google.GooglePlusClient;
 import com.ebr163.socialauth.google.GooglePlusProfile;
 import com.ebr163.socialauth.instagram.InstagramClient;
 import com.ebr163.socialauth.instagram.model.InstagramProfile;
+import com.ebr163.socialauth.twitter.TwitterClient;
+import com.ebr163.socialauth.twitter.TwitterProfile;
 import com.ebr163.socialauth.vk.VkClient;
 import com.ebr163.socialauth.vk.model.VkProfile;
 import com.facebook.FacebookException;
@@ -22,12 +24,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         VkClient.VkProfileLoadedListener, VkClient.VkLogOutListener,
         FacebookClient.FacebookProfileLoadedListener, FacebookClient.FacebookLogOutListener,
         GooglePlusClient.GooglePlusProfileLoadedListener, GooglePlusClient.GooglePlusLogOutListener,
-        InstagramClient.InstagramProfileLoadedListener, InstagramClient.InstagramLogOutListener {
+        InstagramClient.InstagramProfileLoadedListener, InstagramClient.InstagramLogOutListener,
+        TwitterClient.TwitterProfileLoadedListener, TwitterClient.TwitterLogOutListener {
 
     GooglePlusClient googlePlusClient;
     InstagramClient instagramClient;
     FacebookClient facebookClient;
     VkClient vkClient;
+    TwitterClient twitterClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         vkClient = new VkClient(this);
         vkClient.setVkLogOutListener(this);
         vkClient.setVkProfileLoadedListener(this);
+
+        twitterClient = new TwitterClient(this);
+        twitterClient.setTwitterProfileLoadedListener(this);
+        twitterClient.setTwitterLogOutListener(this);
     }
 
     @Override
@@ -77,6 +85,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.vk_logout:
                 vkClient.logOut();
                 break;
+            case R.id.twitter:
+                twitterClient.getProfile();
+                break;
+            case R.id.twitter_logout:
+                twitterClient.logOut();
+                break;
             default:
                 break;
         }
@@ -89,6 +103,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         instagramClient.onActivityResult(requestCode, resultCode, data);
         facebookClient.onActivityResult(requestCode, resultCode, data);
         vkClient.onActivityResult(requestCode, resultCode, data);
+        twitterClient.onActivityResult(requestCode, resultCode, data);
     }
 
     private void toNextScreen() {
@@ -154,6 +169,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onErrorInstagramProfileLoaded(Exception exception) {
+    }
 
+    @Override
+    public void onLogOutTwitter() {
+        Toast.makeText(MainActivity.this, "twitter logout", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onTwitterProfileLoaded(TwitterProfile twitterProfile) {
+        Toast.makeText(MainActivity.this, "twitter", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onErrorTwitterProfileLoaded(Exception exception) {
     }
 }
