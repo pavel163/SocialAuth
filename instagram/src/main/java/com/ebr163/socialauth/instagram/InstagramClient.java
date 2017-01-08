@@ -1,9 +1,9 @@
 package com.ebr163.socialauth.instagram;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 
 import com.ebr163.socialauth.instagram.model.InstagramProfile;
 import com.ebr163.socialauth.instagram.model.InstagramResponse;
