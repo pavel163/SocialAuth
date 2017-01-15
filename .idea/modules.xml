@@ -2,12 +2,19 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/SocialAuth.iml" filepath="$PROJECT_DIR$/SocialAuth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/facebook/facebook.iml" filepath="$PROJECT_DIR$/facebook/facebook.iml" />
+      <module fileurl="file://$PROJECT_DIR$/facebook/facebook.iml" filepath="$PROJECT_DIR$/facebook/facebook.iml" />
       <module fileurl="file://$PROJECT_DIR$/google/google.iml" filepath="$PROJECT_DIR$/google/google.iml" />
+      <module fileurl="file://$PROJECT_DIR$/google/google.iml" filepath="$PROJECT_DIR$/google/google.iml" />
+      <module fileurl="file://$PROJECT_DIR$/instagram/instagram.iml" filepath="$PROJECT_DIR$/instagram/instagram.iml" />
       <module fileurl="file://$PROJECT_DIR$/instagram/instagram.iml" filepath="$PROJECT_DIR$/instagram/instagram.iml" />
       <module fileurl="file://$PROJECT_DIR$/socialauth.iml" filepath="$PROJECT_DIR$/socialauth.iml" />
       <module fileurl="file://$PROJECT_DIR$/twitter/twitter.iml" filepath="$PROJECT_DIR$/twitter/twitter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/twitter/twitter.iml" filepath="$PROJECT_DIR$/twitter/twitter.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vk/vk.iml" filepath="$PROJECT_DIR$/vk/vk.iml" />
       <module fileurl="file://$PROJECT_DIR$/vk/vk.iml" filepath="$PROJECT_DIR$/vk/vk.iml" />
     </modules>
   </component>
