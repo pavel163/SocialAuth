@@ -6,7 +6,7 @@ Create new application at https://apps.twitter.com<br />
 
 Download via Gradle:
 ```gradle
-compile 'com.github.pavel163.SocialAuth:twitter:1.0.0'
+compile 'com.github.pavel163.SocialAuth:twitter:1.0.1'
 ```
 In strings.xml
 ```xml
@@ -36,7 +36,7 @@ And look at an example (May be a fragment instead of activity) <a href="https://
 Create new application at https://developers.facebook.com/apps<br />
 Download via Gradle:
 ```gradle
-compile 'com.github.pavel163.SocialAuth:facebook:1.0.0'
+compile 'com.github.pavel163.SocialAuth:facebook:1.0.1'
 ```
 In strings.xml
 ```xml
@@ -63,7 +63,7 @@ And look at an example (May be a fragment instead of activity) <a href="https://
 Create new application at https://vk.com/dev<br />
 Download via Gradle:
 ```gradle
-compile 'com.github.pavel163.SocialAuth:vk:1.0.0'
+compile 'com.github.pavel163.SocialAuth:vk:1.0.1'
 ```
 In integers.xml
 ```xml
@@ -92,7 +92,7 @@ Don't forget to enable implicit OAuth in application security settings.
 
 Download via Gradle:
 ```gradle
-compile 'com.github.pavel163.SocialAuth:instagram:1.0.0'
+compile 'com.github.pavel163.SocialAuth:instagram:1.0.1'
 ```
 In strings.xml
 ```xml
@@ -107,7 +107,7 @@ Don't forget to enable google plus api.<br />
 
 Download via Gradle:
 ```gradle
-compile 'com.github.pavel163.SocialAuth:google:1.0.0'
+compile 'com.github.pavel163.SocialAuth:google:1.0.1'
 ```
 In strings.xml
 ```xml
