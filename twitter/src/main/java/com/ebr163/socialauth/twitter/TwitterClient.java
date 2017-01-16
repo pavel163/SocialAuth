@@ -66,7 +66,7 @@ public class TwitterClient {
                 this.accessToken = data.getStringExtra(TwitterAuthActivity.KEY_ACCESS_TOKEN);
                 loadUser();
             }
-        } else {
+        } else if (resultCode != Activity.RESULT_CANCELED) {
             twitterProfileLoadedListener.onErrorTwitterProfileLoaded(new RuntimeException(data.getStringExtra(TwitterAuthActivity.CODE_EXCEPTION)));
         }
     }
