@@ -45,6 +45,12 @@ public class GooglePlusActivity extends AppCompatActivity implements View.OnClic
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        googlePlusClient.free();
+    }
+
+    @Override
     public void onLogOutGooglePlus(Status status) {
 
     }

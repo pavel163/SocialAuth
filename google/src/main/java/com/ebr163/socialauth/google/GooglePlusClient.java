@@ -150,7 +150,7 @@ public class GooglePlusClient {
         }
     }
 
-    private void free() {
+    public void free() {
         if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
             mGoogleApiClient.stopAutoManage((FragmentActivity) activity);
             mGoogleApiClient.disconnect();
