@@ -22,6 +22,7 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by Ergashev on 06.01.2017.
@@ -116,6 +117,10 @@ public class FacebookClient {
     public FacebookClient(Fragment fragment) {
         this(fragment.getActivity());
         this.fragment = fragment;
+    }
+
+    public void setFacebookPermissions(List<String> permissions) {
+        this.facebookPermissions = permissions;
     }
 
     public void getProfile() {

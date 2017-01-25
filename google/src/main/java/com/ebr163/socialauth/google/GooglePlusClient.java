@@ -51,7 +51,6 @@ public class GooglePlusClient {
     public GooglePlusClient(Fragment fragment) {
         this(fragment.getActivity());
         this.fragment = fragment;
-        init();
     }
 
     public GooglePlusClient(Activity activity) {
