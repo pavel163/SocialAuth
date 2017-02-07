@@ -80,6 +80,7 @@ public class FacebookClient {
                                     facebookProfile.locale = object.getString("locale");
                                     facebookProfile.name = object.getString("name");
                                     facebookProfile.timezone = object.getString("timezone");
+                                    facebookProfile.email = object.getString("email");
 
                                     if (object.has("location")) {
                                         Location location = new Location();
@@ -98,7 +99,7 @@ public class FacebookClient {
                             }
                         });
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,birthday,first_name,gender,last_name,link,location,locale,name,timezone,picture.type(large)");
+                parameters.putString("fields", "id,email,birthday,first_name,gender,last_name,link,location,locale,name,timezone,picture.type(large)");
                 request.setParameters(parameters);
                 request.executeAsync();
             }

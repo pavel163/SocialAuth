@@ -18,4 +18,5 @@ public class FacebookProfile {
     public String name;
     public String timezone;
     public String picture;
+    public String email;
 }

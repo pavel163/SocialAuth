@@ -96,6 +96,7 @@ public class TwitterClient {
                         twitterProfile.screenName = response.body().screenName;
                         twitterProfile.photo = response.body().profileImageUrl;
                         twitterProfile.accessToken = accessToken;
+                        twitterProfile.email = response.body().email;
                         twitterProfileLoadedListener.onTwitterProfileLoaded(twitterProfile);
                     }
 

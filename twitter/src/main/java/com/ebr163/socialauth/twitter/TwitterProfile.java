@@ -10,4 +10,5 @@ public class TwitterProfile {
     public String name;
     public String photo;
     public String screenName;
+    public String email;
 }
